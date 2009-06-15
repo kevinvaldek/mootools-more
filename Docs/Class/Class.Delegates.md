@@ -11,7 +11,7 @@ Extends the [Class][] native, this is a mutator.
 			this.element = $(element);
 		},
 		dispose: function(){
-			thsi.element.dispose(); // manual delegation
+			this.element.dispose(); // manual delegation
 		}
 	});
 
