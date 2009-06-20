@@ -13,8 +13,7 @@ Class.Mutators.Delegates = function(self, delegations) {
 	new Hash(delegations).each(function(delegates, target) {
 		$splat(delegates).each(function(delegate) {
 			self[delegate] = function() {
-				target = eval(target);
-				target[delegate].apply(target, arguments);
+				this[target][delegate].apply(this[target], arguments);
 			};
 		});
 	});
