@@ -21,7 +21,7 @@ Extends the [Class][] native, this is a mutator.
 
 	var MyClass = new Class({
 		Delegates: {
-			'this.element': 'dispose' // target: methodName(s)
+			element: 'dispose' // target: methodName(s)
 		},
 		initialize: function(element){
 			this.element = $(element);
@@ -37,8 +37,8 @@ As the values in the Delegates object can either be a *String* or an *Array*, yo
 
 	var MyClass = new Class({
 		Delegates: {
-			'this.element': 'dispose',
-			'this.peer': ['setStyle', 'grab', 'inject']
+			element: 'dispose',
+			peer: ['setStyle', 'grab', 'inject']
 		},
 		initialize: function(element, peer){
 			this.element = $(element);
