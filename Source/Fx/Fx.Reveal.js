@@ -20,6 +20,7 @@ Fx.Reveal = new Class({
 		onComplete: $empty(thisElement),
 		heightOverride: null,
 		widthOverride: null, */
+		link: 'cancel',
 		styles: ['padding', 'border', 'margin'],
 		transitionOpacity: !Browser.Engine.trident4,
 		mode: 'vertical',
@@ -94,8 +95,7 @@ Fx.Reveal = new Class({
 					 this.element.getStyle('visiblity') == 'hidden' ||
 					 this.element.getStyle('opacity') == 0){
 					this.showing = true;
-					this.hiding = false;
-					this.hidden = false;
+					this.hiding = this.hidden =  false;
 					var setToAuto, startStyles;
 					//toggle display, but hide it
 					this.element.measure(function(){
@@ -175,6 +175,12 @@ Fx.Reveal = new Class({
 			this.dissolve();
 		}
 		return this;
+	},
+
+	cancel: function(){
+		this.parent.apply(this, arguments);
+		this.hidding = false;
+		this.showing = false;
 	}
 
 });
@@ -184,7 +190,7 @@ Element.Properties.reveal = {
 	set: function(options){
 		var reveal = this.retrieve('reveal');
 		if (reveal) reveal.cancel();
-		return this.eliminate('reveal').store('reveal:options', $extend({link: 'cancel'}, options));
+		return this.eliminate('reveal').store('reveal:options', options);
 	},
 
 	get: function(options){

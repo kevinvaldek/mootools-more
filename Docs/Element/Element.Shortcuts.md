@@ -19,6 +19,19 @@ Returns the state of the display of the element.
 
 ### Returns
 
+* (*boolean*) true = display != "none", false = display == "none".
+
+Element Method: isVisible {#Element:isVisible}
+----------------------------------------------
+
+Determines if an element is displayed using offset height/width. If both of these are zero it usually means the element is not displayed or one of its parent's is not. 
+
+### Syntax
+
+	myElement.isVisible();
+
+### Returns
+
 * (*boolean*) true = visible, false = not visible.
 
 Element Method: toggle {#Element:toggle}
@@ -72,16 +85,16 @@ Shows an element.
 Element Method: swapClass {#Element:swapClass}
 ----------------------------------------------
 
-Adds one class and removes the other. If the one to remove is not found the one to add is still added.
+Removes one class and adds the other. If the one to remove is not found the one to add is still added.
 
 ### Syntax
 
-	myElement.swapClass(addClass, removeClass);
+	myElement.swapClass(removeClass, addClass);
 
 ### Arguments
 
-1. addClass - (*string*) the css class to add.
-2. removeClass - (*string*) the css class to remove.
+1. removeClass - (*string*) the css class to remove.
+2. addClass - (*string*) the css class to add.
 
 ### Returns
 
@@ -89,7 +102,7 @@ Adds one class and removes the other. If the one to remove is not found the one 
 
 ### Example
 
-	$(id).swapClass('green', 'blue'); //adds green, removes blue
+	$(id).swapClass('green', 'blue'); // removes green, adds blue
 
 [Element:hide]: #Element:hide
 [Element]: /core/Element/Element

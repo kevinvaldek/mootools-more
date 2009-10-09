@@ -46,17 +46,17 @@ var Builder = {
 			'Core'		: ['More', 'Lang', 'Log'],
 			'Class'		: ['Class.Refactor', 'Class.Binds', 'Class.Occlude'],
 			'Native'	: ['Date', 'Date.Extras', 'String.Extras', 'Hash.Extras', 'Array.Extras', 'String.QueryString', 'URI', 'URI.Relative'],
-			'Element'	: ['Element.Forms', 'Element.Measure'],
+			'Element'	: ['Element.Forms', 'Element.Measure', 'Elements.From'],
 			'Drag'      : ['Drag', 'Drag.Move', 'Slider', 'Sortables'],
 			'Fx'        : ['Fx.Scroll', 'Fx.Slide', 'Fx.Elements', 'Fx.Accordion', 'Fx.SmoothScroll'],
 			'Request'   : ['Request.JSONP', 'Request.Queue', 'Request.Periodical'],
 			'Utilities' : ['Assets', 'Color', 'Group', 'Hash.Cookie'],
 			'Interface' : ['Scroller', 'Tips'],
-			'Localization':['Date.English.US', 'FormValidator.English']
+			'Localization':['Date.English.US', 'Form.Validator.English']
 		},
 
 		lang: {
-			'Localization':['Date.Italian', 'Date.Swedish', 'Date.Norwegian', 'FormValidator.French']
+			'Localization':['Date.Italian', 'Date.Swedish', 'Date.Norwegian', 'Form.Validator.French']
 		},
 
 		specs: {

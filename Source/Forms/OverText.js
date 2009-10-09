@@ -13,7 +13,7 @@ var OverText = new Class({
 
 	Implements: [Options, Events, Class.Occlude],
 
-	Binds: ['reposition', 'assert', 'focus'],
+	Binds: ['reposition', 'assert', 'focus', 'hide'],
 
 	options: {/*
 		textOverride: null,
@@ -56,14 +56,27 @@ var OverText = new Class({
 			'class': 'overTxtLabel',
 			styles: {
 				lineHeight: 'normal',
-				position: 'absolute'
+				position: 'absolute',
+				cursor: 'text'
 			},
 			html: val,
 			events: {
-				click: this.hide.pass(true, this)
+				click: this.hide.pass(this.options.element == 'label', this)
 			}
 		}).inject(this.element, 'after');
-		if (this.options.element == 'label') this.text.set('for', this.element.get('id'));
+		if (this.options.element == 'label') {
+			if (!this.element.get('id')) this.element.set('id', 'input_' + new Date().getTime());
+			this.text.set('for', this.element.get('id'));
+		}
+
+		this.textHolder = new Element('div', {
+			styles: {
+				lineHeight: 'normal',
+				position: 'relative'
+			},
+			'class':'OverTextWrapper'
+		}).adopt(this.text).inject(this.element, 'before');
+
 		this.element.addEvents({
 			focus: this.focus,
 			blur: this.assert,
@@ -72,6 +85,13 @@ var OverText = new Class({
 		window.addEvent('resize', this.reposition.bind(this));
 		this.assert(true);
 		this.reposition();
+	},
+
+	wrap: function(){
+		if (this.options.element == 'label') {
+			if (!this.element.get('id')) this.element.set('id', 'input_' + new Date().getTime());
+			this.text.set('for', this.element.get('id'));
+		}
 	},
 
 	startPolling: function(){
@@ -98,24 +118,25 @@ var OverText = new Class({
 	},
 
 	focus: function(){
-		if (!this.text.isDisplayed() || this.element.get('disabled')) return;
+		if (this.text && (!this.text.isDisplayed() || this.element.get('disabled'))) return;
 		this.hide();
 	},
 
-	hide: function(suppressFocus){
-		if (this.text.isDisplayed() && !this.element.get('disabled')){
+	hide: function(suppressFocus, force){
+		if (this.text && (this.text.isDisplayed() && (!this.element.get('disabled') || force))){
 			this.text.hide();
 			this.fireEvent('textHide', [this.text, this.element]);
 			this.pollingPaused = true;
 			try {
-				if (!suppressFocus) this.element.fireEvent('focus').focus();
+				if (!suppressFocus) this.element.fireEvent('focus');
+				this.element.focus();
 			} catch(e){} //IE barfs if you call focus on hidden elements
 		}
 		return this;
 	},
 
 	show: function(){
-		if (!this.text.isDisplayed()){
+		if (this.text && !this.text.isDisplayed()){
 			this.text.show();
 			this.reposition();
 			this.fireEvent('textShow', [this.text, this.element]);
@@ -135,8 +156,8 @@ var OverText = new Class({
 
 	reposition: function(){
 		this.assert(true);
-		if (!this.element.getParent() || !this.element.offsetHeight) return this.stopPolling().hide();
-		if (this.test()) this.text.position($merge(this.options.positionOptions, {relativeTo: this.element}));
+		if (!this.element.isVisible()) return this.stopPolling().hide();
+		if (this.text && this.test()) this.text.position($merge(this.options.positionOptions, {relativeTo: this.element}));
 		return this;
 	}
 
@@ -144,14 +165,38 @@ var OverText = new Class({
 
 OverText.instances = [];
 
-OverText.update = function(){
+$extend(OverText, {
 
-	return OverText.instances.map(function(ot){
-		if (ot.element && ot.text) return ot.reposition();
-		return null; //the input or the text was destroyed
-	});
+	each: function(fn) {
+		return OverText.instances.map(function(ot, i){
+			if (ot.element && ot.text) return fn.apply(OverText, [ot, i]);
+			return null; //the input or the text was destroyed
+		});
+	},
+	
+	update: function(){
 
-};
+		return OverText.each(function(ot){
+			return ot.reposition();
+		});
+
+	},
+
+	hideAll: function(){
+
+		return OverText.each(function(ot){
+			return ot.hide(true, true);
+		});
+
+	},
+
+	showAll: function(){
+		return OverText.each(function(ot) {
+			return ot.show();
+		});
+	}
+
+});
 
 if (window.Fx && Fx.Reveal) {
 	Fx.Reveal.implement({

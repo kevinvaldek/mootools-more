@@ -1,4 +1,7 @@
 {
+	"Core": {
+		"Depender": ['all']
+	},
 	"Class": {
 		"Chain.Wait":['all']
 	},
@@ -9,29 +12,39 @@
 		"Sortables":['single', 'multi']
 	},
 	"Element":{
+		"Element.Delegation":['all'],
 		"Element.Forms":['all'],
 		"Element.Shortcuts":['all'],
 		"Element.Pin":['all'],
 		"Element.Position":['all']
 	},
 	"Forms": {
-		"FormValidator.Inline":['all'],
-		"FormValidator.Extras":['all'],
+		"Form.Validator.Inline":['all'],
+		"Form.Validator.Extras":['all'],
+		"Form.Request": ['all'],
+		"Form.Request.Append": ['all'],
 		"OverText": ['all']
 	},
 	"Fx": {
 		"Fx.Accordion":['all'],
 		"Fx.Elements":['all'],
 		"Fx.Move":['all'],
-		"Fx.Reveal":['all'],
-		"Fx.Scroll":['all'],
+		"Fx.Reveal":['basic', 'toggle'],
+		"Fx.Scroll":['element', 'window'],
 		"Fx.Slide":['all'],
 		"Fx.SmoothScroll":['all'],
 		"Fx.Sort":['all']
 	},
 	"Interface":{
+		"HtmlTable":['all'],
+		"HtmlTable.Zebra":['all'],
+		"HtmlTable.Sort":['all'],
+		"HtmlTable.Select":['all'],
+		"Keyboard":['single', 'nested'],
+		"Mask":['all'],
 		"Scroller":['all'],
-		"Tips":['all']
+		"Tips":['all'],
+		"Spinner":['all']
 	},
 	"Request":{
 		"Request.JSONP": ['all'],
